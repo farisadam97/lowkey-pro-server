@@ -1,0 +1,112 @@
+swagger: "2.0"
+info:
+  description: "Ini adalah dokumentasi API Todo APP"
+  version: "1.0.0"
+  title: "Todo APP"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:8080"
+basePath: "/v1"
+tags:
+- name: "Todo"
+  description: "Todo Module"
+schemes:
+- "http"
+paths:
+  /todos:
+    post:
+      tags:
+      - "Todo"
+      summary: "Create todo list"
+      description: "Untuk menambahkan todo app"
+      operationId: "createTodo"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Parameter yang akan ditambahkan ke tabel todo"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateTodoRequest"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            allOf:
+              - $ref: '#/definitions/ApiResponse'
+              - type: "object"
+                properties:
+                  data:
+                    $ref: "#/definitions/Todo"
+        "400":
+          description: "Bad request"
+      security:
+      - Bearer: []
+    get:
+      tags:
+      - "Todo"
+      summary: "Get all todo"
+      description: "Ini adalah endpoint untuk get semua todo"
+      operationId: "getTodos"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "todo"
+        in: "query"
+        description: "Filter todo by keyword"
+        required: false
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            allOf:
+              - $ref: '#/definitions/ApiResponse'
+              - type: "object"
+                properties:
+                  data:
+                    type: "array"
+                    items:
+                      $ref: "#/definitions/Todo"
+      security:
+      - Bearer: []
+
+securityDefinitions:
+  Bearer:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+definitions:
+  Todo:
+    type: "object"
+    required:
+    - "id"
+    - "todo"
+    properties:
+      id:
+        type: "integer"
+        example: 1
+      todo:
+        type: "string"
+        example: "makan sambil tidak jalan"
+  CreateTodoRequest:
+    type: "object"
+    required:
+    - "id"
+    - "todo"
+    properties:
+      todo:
+        type: "string"
+        example: "makan sambil tidak jalan"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        example: 200
+      message:
+        type: "string"
