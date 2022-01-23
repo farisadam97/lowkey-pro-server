@@ -1,8 +1,27 @@
 const express = require("express");
-require('dotenv').config();
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
+const swaggerUi = require("swagger-ui-express")
+const swaggerJSON = require('./docs/swagger.json')
 const app = express();
-const PORT = process.env.PORT 
+
+var corsOptions = {
+    origin: "http://localhost:8081"
+};
+
+app.use(cors(corsOptions));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerJSON));
+// accept request in form or JSON
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+const db = require("./app/models");
+db.client.sync();
+
+require("./app/routes/player.routes")(app);
+
+const PORT = process.env.PORT || 3030;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });

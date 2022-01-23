@@ -1,0 +1,630 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "DOKUMENTASI API.",
+    "version": "1.0.0",
+    "title": "Binar Academy Bootcamp - FSW - Chapter 9 - Challenge"
+  },
+  "host": "localhost:5555",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "players",
+      "description": "Everything about your players"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/players": {
+      "post": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Add a new pet to the store",
+        "description": "",
+        "operationId": "addPlayer",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Players that needs to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Players"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/definitions/CreateNewPlayer"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Get All Players",
+        "description": "Get All Players",
+        "operationId": "findPlayers",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CreateNewPlayer"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        }
+      }
+    },
+    "/players/{playerid}": {
+      "get": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Find pet by IDPlayer",
+        "description": "Returns a single Players",
+        "operationId": "getPetById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "playerid",
+            "in": "path",
+            "description": "Player ID return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/definitions/CreateNewPlayer"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Invalid ID Players"
+          },
+          "404": {
+            "description": "Pet not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Update an existing Players",
+        "description": "",
+        "operationId": "updatePLayer",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "playerid",
+            "in": "path",
+            "description": "Player ID return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Pet object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdatePlayers"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/definitions/CreateNewPlayer"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Cannot update Player with id=${id}. Maybe Player was not found or req.body is empty!"
+          },
+          "500": {
+            "description": "Error updating Player with id=id"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Deletes a Players",
+        "description": "",
+        "operationId": "deletePet",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "playerid",
+            "in": "path",
+            "description": "playerid to delete",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Player was deleted successfully!"
+          },
+          "400": {
+            "description": "Cannot delete Player with id=${id}. Maybe Player was not found!"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "Login"
+        ],
+        "summary": "Login Player",
+        "description": "",
+        "operationId": "loginPlayer",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Login that needs to be access",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/definitions/CreateNewPlayer"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/new-game": {
+      "post": {
+        "tags": [
+          "gamers"
+        ],
+        "summary": "New Gamers",
+        "description": "",
+        "operationId": "CreateGame",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Gamers that needs to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Game"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/definitions/Game"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/gamers": {
+      "get": {
+        "tags": [
+          "gamers"
+        ],
+        "summary": "Get All Game",
+        "description": "Get All Game",
+        "operationId": "findGamers",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Gamers"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        }
+      }  
+    },
+    "/gamers/{gameid}": {
+      "get": {
+        "tags": [
+          "gamers"
+        ],
+        "summary": "Find Game by ID",
+        "description": "Returns a single ID",
+        "operationId": "getGameById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "gameid",
+            "in": "path",
+            "description": "Game ID return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/ApiResponse"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "$ref": "#/definitions/Gamers"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Invalid ID Gamers"
+          },
+          "404": {
+            "description": "Gamers not found"
+          }
+        }
+      } 
+    } 
+  },
+  "definitions": {
+    "Players": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "username",
+        "email",
+        "password",
+        "bio",
+        "city",
+        "social_media_url"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "nama player"
+        },
+        "username": {
+          "type": "string",
+          "example": "username player"
+        },
+        "email": {
+          "type": "string",
+          "example": "players@email.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "password"
+        },
+        "bio": {
+          "type": "string",
+          "description": "bio"
+        },
+        "city": {
+          "type": "string",
+          "description": "city player"
+        },
+        "social_media_url": {
+          "type": "string",
+          "description": "social_media_url"
+        }
+      }
+    },
+    "Login": {
+      "type": "object",
+      "required": [
+        "username",
+        "password"
+      ],
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "username player"
+        },
+        "password": {
+          "type": "string",
+          "example": "password"
+        }
+      }
+    },
+    "UpdatePlayers": {
+      "type": "object",
+      "required": [
+        "name",
+        "username",
+        "email",
+        "password"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "nama player"
+        },
+        "username": {
+          "type": "string",
+          "example": "nama player"
+        },
+        "email": {
+          "type": "string",
+          "example": "players@email.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "password"
+        },
+        "bio": {
+          "type": "string",
+          "description": "bio"
+        },
+        "city": {
+          "type": "string",
+          "description": "city"
+        },
+        "social_media_url": {
+          "type": "string",
+          "description": "social_media_url"
+        }
+      }
+    },
+    "Game": {
+      "type": "object",
+      "required": [
+        "name",
+        "description",
+        "thumbnail_url",
+        "game_url"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "name game"
+        },
+        "description": {
+          "type": "string",
+          "example": "description game"
+        },
+        "thumbnail_url": {
+          "type": "string",
+          "example": "thumbnail_url game"
+        },
+        "game_url": {
+          "type": "string",
+          "example": "game_url game"
+        }
+      }
+    },
+    "Gamers": {
+      "type": "object",
+      "required": [
+        "name",
+        "description",
+        "thumbnail_url",
+        "game_url",
+        "play_count"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "name game"
+        },
+        "description": {
+          "type": "string",
+          "example": "description game"
+        },
+        "thumbnail_url": {
+          "type": "string",
+          "example": "thumbnail_url game"
+        },
+        "game_url": {
+          "type": "string",
+          "example": "game_url game"
+        },
+        "play_count": {
+          "type": "string",
+          "example": "play_count game"
+        }
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string",
+          "example": "SUCCESS"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "CreateNewPlayer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "int64",
+          "example": "0"
+        },
+        "name": {
+          "type": "string",
+          "example": "nama player"
+        },
+        "username": {
+          "type": "string",
+          "example": "nama player"
+        },
+        "email": {
+          "type": "string",
+          "example": "players@email.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "password"
+        },
+        "bio": {
+          "type": "string",
+          "description": "experience"
+        },
+        "city": {
+          "type": "string",
+          "description": "experience"
+        },
+        "social_media_url": {
+          "type": "string",
+          "description": "experience"
+        },
+        "total_score": {
+          "type": "string",
+          "description": "experience"
+        },
+        "updatedAt": {
+          "type": "date-time",
+          "example": "2021-12-11T05:46:30.945Z"
+        },
+        "createdAt": {
+          "type": "date-time",
+          "example": "2021-12-11T05:46:30.945Z"
+        }
+      }
+    }
+  }
+}
