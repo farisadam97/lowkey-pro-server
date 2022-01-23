@@ -25,16 +25,16 @@ exports.login = async (req, res) => {
 
     .then( async data => {
       
-      // const isMatch = await bcrypt.compare(req.body.password, data.password)
-      const matchPassword = (req.body.password === data.password) ? "True" : "False" 
+      const isMatch = await bcrypt.compare(req.body.password, data.password)
+      // const matchPassword = (req.body.password === data.password) ? "True" : "False" 
 
-      // if (!isMatch) {
-      //   throw {
-      //       message: `invalid password`,
-      //       code: 404,
-      //       error: `bad request`,
-      //   }
-      // }
+      if (!isMatch) {
+        throw {
+            message: `invalid password`,
+            code: 404,
+            error: `bad request`,
+        }
+      }
 
       const dataExist = {
         id: data.id,
