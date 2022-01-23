@@ -1,8 +1,14 @@
+require('dotenv').config()
 const db = require("../models");
 const Player = db.users;
 const Op = db.Sequelize.Op;
-/* const jwt = require("jsonwebtoken")
-const bcrypt = require("bcrypt") */
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+
+const createToken = (id) => {
+  return jwt.sign({ id }, process.env.APP_SECRET , { expiresIn: "7 days" });
+};
+
 //Login
 exports.login = async (req, res) => {
     if (!req.body.username || !req.body.password ) {
@@ -16,34 +22,51 @@ exports.login = async (req, res) => {
     await Player.findOne({
       where : { username: req.body.username }
     })
-    .then(data => {
+
+    .then( async data => {
+      
+      // const isMatch = await bcrypt.compare(req.body.password, data.password)
       const matchPassword = (req.body.password === data.password) ? "True" : "False" 
+
+      // if (!isMatch) {
+      //   throw {
+      //       message: `invalid password`,
+      //       code: 404,
+      //       error: `bad request`,
+      //   }
+      // }
 
       const dataExist = {
         id: data.id,
         name: data.name,
-        username: data.username,
         email: data.email,
-        password: data.password, 
         total_score: data.total_score,
         bio: data.bio, 
         city: data.city, 
         social_media_url: data.social_media_url, 
         
       };
-
-      console.log(dataExist)
+    
+      const dataToken = await createToken(dataExist.id);
 
       res.status(200).json({
+        RespCode: "00",
         result: "SUCCESS",
-        message: dataExist
+        id: dataExist.id,
+        name: dataExist.name,
+        email: dataExist.email,
+        total_score: dataExist.total_score,
+        bio: dataExist.bio,
+        city: dataExist.city,
+        social_media_url: dataExist.social_media_url,
+        token: dataToken
       });
       
     })
     .catch(err => {
       console.log(err)
       
-      return res.status(400).json({
+      return res.status(404).json({
         result:"FAILED",
         message :" data not found"
     })
