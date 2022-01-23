@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "title": "Binar Academy Bootcamp - FSW - Chapter 9 - Challenge"
   },
-  "host": "localhost:3030",
+  "host": "localhost:5555",
   "basePath": "/api",
   "tags": [
     {

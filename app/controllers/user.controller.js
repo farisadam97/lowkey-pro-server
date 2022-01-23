@@ -1,6 +1,7 @@
 const db = require("../models");
 const Player = db.users;
 const Op = db.Sequelize.Op;
+const bcrypt = require('bcrypt');
 /* const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt") */
 //Login
@@ -120,22 +121,21 @@ exports.create = async (req, res) => {
       });
       
     })
-   
 */
-  await Player.findOne({ 
-    where: { username: req.body.username }
-    })
-    .then(data => {
-      return res.status(400).json({
-        result: "FAILED",
-        message: "username already exist "
-      });
+  // await Player.findOne({ 
+  //   where: { username: req.body.username }
+  //   })
+  //   .then(data => {
+  //     return res.status(400).json({
+  //       result: "FAILED",
+  //       message: "username already exist "
+  //     });
       
-    }) 
-    .catch(err  => {
-      console.log(err);
-    })
- /*  Player.findAll({ 
+  //   }) 
+  //   .catch(err  => {
+  //     console.log(err);
+  //   })
+  /*  Player.findAll({ 
     where: { email: req.body.email }
     })
     .then(data => {
@@ -145,34 +145,60 @@ exports.create = async (req, res) => {
       });
       
     }) */
-     
   
+  const existedUsername = await Player.findOne({where: { username: req.body.username }})
+  const existedEmail = await Player.findOne({where: { email: req.body.email }})
+  
+  if(existedUsername){
+    return res.status(400).json({
+      result: "FAILED",
+      message: "Username already exist"
+    });
+  } else (
+    console.log("lanjut")
+  )
+  if(existedEmail){
+    return res.status(400).json({
+      result: "FAILED",
+      message: "email already used"
+    });
+  } else (
+    console.log("lanjut")
+  )
+
+  const passwordHash = await bcrypt.hash(req.body.password, 12);
+    
   const player = {
     name: req.body.name,
     username: req.body.username,
     email: req.body.email,
-    password: req.body.password, 
+    password: passwordHash, 
     total_score:0,
     bio: req.body.bio, 
     city: req.body.city, 
     social_media_url: req.body.social_media_url, 
     
   };
-
-  Player.create(player)
-    .then(data => {
-      res.status(200).json({
-        result: "SUCCESS",
-        message: data
+  if(!existedEmail && !existedUsername){
+    Player.create(player)
+      .then(data => {
+        res.status(200).json({
+          result: "SUCCESS",
+          message: {
+            name:data.name,
+            username:data.username,
+            email:data.email
+          }
+        });
+      })
+      .catch(err => {
+        res.status(500).json({
+          result: "FAILED",
+          message:
+            err.message || "Some error occurred while creating the Player."
+        });
       });
-    })
-    .catch(err => {
-      res.status(500).json({
-        result: "FAILED",
-        message:
-          err.message || "Some error occurred while creating the Player."
-      });
-    });
+  }
 };
 
 // get all players (with query parameters)
