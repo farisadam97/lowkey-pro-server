@@ -12,6 +12,7 @@ module.exports = app => {
   router.post("/players", players.create);
   router.get("/players", players.findAll);
   router.get("/players/:id", players.findById);
+  router.get("/history/:user_id", gamehistory.findAll);
   router.put("/players/:id", players.update);
   router.delete("/players/:id", players.delete);
 
