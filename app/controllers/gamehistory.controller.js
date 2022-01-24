@@ -8,6 +8,12 @@ const Op = db.Sequelize.Op;
 // Create new player
 exports.create = (req, res) => {
 
+  const user_id = req.body.user_id
+  const game_id = req.body.game_id
+  const result = req.body.result
+  const score = req.body.score
+  const game_date = req.body.game_date
+
   const game = {
     user_id: req.body.user_id,
     game_id: req.body.game_id,
@@ -50,3 +56,25 @@ exports.create = (req, res) => {
     });
 };
 
+// Find a Detail Game with an id
+exports.findAll = (req, res) => {
+	const user_id = req.params.user_id;
+
+	GamePlay.findAll({
+		where: {
+		user_id
+		}
+	})
+	.then(data => {
+		res.status(200).json({
+			result: "SUCCESS",
+			message: data
+		});
+	})
+	.catch(err => {
+		res.status(500).json({
+			result: "FAILED",
+			message: "Error retrieving Player with id=" + user_id
+		});
+	});
+};
