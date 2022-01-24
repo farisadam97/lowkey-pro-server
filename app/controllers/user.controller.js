@@ -196,9 +196,9 @@ exports.create = async (req, res) => {
     email: req.body.email,
     password: passwordHash, 
     total_score:0,
-    bio: req.body.bio, 
-    city: req.body.city, 
-    social_media_url: req.body.social_media_url, 
+    // bio: req.body.bio, 
+    // city: req.body.city, 
+    // social_media_url: req.body.social_media_url, 
     
   };
   if(!existedEmail && !existedUsername){
