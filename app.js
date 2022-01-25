@@ -7,10 +7,10 @@ const swaggerJSON = require('./docs/swagger.json')
 const app = express();
 
 var corsOptions = {
-    origin: "http://localhost:3000"
+    origin: "https://lowkey-pro-backend.herokuapp.com"
 };
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerJSON));
 // accept request in form or JSON
 app.use(bodyParser.urlencoded({ extended: true }));
