@@ -3,7 +3,14 @@ const dbConfig = require("../config/db.config.js");
 const Sequelize = require("sequelize");
 const client = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
-  dialect: dbConfig.dialect,
+  dialect: 'postgres',
+  protocol: 'postgres',
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
+  },
 
   pool: {
     max: dbConfig.pool.max,
