@@ -27,7 +27,7 @@ exports.create = (req, res) => {
       // sokring diplayer
       Players.findByPk(user_id)
       .then(player => {
-        let scValue = player.total_score + 1;
+        let scValue = player.total_score + parseInt(score);
         Players.update({ total_score : scValue }, {
           where: { id: user_id }
         })
