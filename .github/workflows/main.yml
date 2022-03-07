@@ -46,3 +46,4 @@ jobs:
             heroku_email: farisadam97@gmail.com
             # The appname to use for deploying/updating
             heroku_app_name: lowkey-pro-backend
+            branch: main
