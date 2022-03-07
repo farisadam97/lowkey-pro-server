@@ -11,10 +11,10 @@ describe('Test User Controller', () => {
         // positive test
         test("[Positive] Create player with hardcode data" , async () => {
             // tiap habis test angka 1 nya tambahin lagi. itu user udh ke create soalnya
-            const username = "testjest1111"
-            const email = "testjest1111@test.com"
-            const password = "testjest1111"
-            const name = "testjest1111"
+            const username = "testjest11111"
+            const email = "testjest11111@test.com"
+            const password = "testjest11111"
+            const name = "testjest11111"
             await request(app)
             .post("/api/players")
             .send({
