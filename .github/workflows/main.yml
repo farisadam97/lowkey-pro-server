@@ -45,4 +45,4 @@ jobs:
             # Email that you use with heroku
             heroku_email: farisadam97@gmail.com
             # The appname to use for deploying/updating
-            heroku_app_name: lowkey-pro-server
+            heroku_app_name: lowkey-pro-backend
