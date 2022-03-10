@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest ",
     "start": "nodemon app",
-    "test": "jest --init"
+    "jest:init": "jest --init"
   },
   "repository": {
     "type": "git",
